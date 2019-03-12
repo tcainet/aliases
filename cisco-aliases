@@ -1,0 +1,43 @@
+! Useful Aliases (Cisco)
+conf t
+!
+alias exec stats sh run | i ip route
+alias configure stats do sh run | i ip route
+alias exec localbgp show ip bgp quote-regexp "^$" | begin Network
+! alias exec localbgp sh ip bgp vpnv4 vrf dmvpn quote-regexp "^$" | begin Network
+alias configure localbgp do show ip bgp quote-regexp "^$" | begin Network
+! alias exec advrt sh ip bgp nei 134.222.92.244 adv
+alias exec srb sh run | beg
+alias exec srs sh run | sec
+alias exec sri sh run | incl
+alias exec siib sh ip int brief
+alias exec srint sh run interface
+alias exec on sh ip ospf nei
+alias exec ospfint show ip ospf int brief
+alias configure sh do sh
+alias configure siib do sh ip int brief
+alias configure srb do sh run | beg
+alias configure srs do sh run | sec
+alias configure sri do sh run | incl
+alias configure srint do sh run interface
+alias interface sh do sh
+alias interface siib do sh ip int brief
+alias exec chprf sh run | i prefix-list
+alias exec killtcp clear tcp tcb
+alias exec chktcp sh tcp brief | i
+alias exec br show run | include interface | ip address | description
+alias exec diff sh arch conf diff nvram:startup-config system:running-config
+!
+end
+!
+--------------------------------
+--------------------------------
+! IPSec aliases (Cisco)
+alias exec sciss show crypto isakmp sa
+alias exec scips show crypto ipsec sa
+alias exec ccs clear crypto sa peer
+alias exec cci clear crypto isakmp
+alias exec ps show proc cpu | excl 0.00%__0.00%__0.00%
+alias exec br show run | include interface | ip address | description
+alias exec diff sh arch conf diff nvram:startup-config system:running-config
+--------------------------------
