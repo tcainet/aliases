@@ -1,0 +1,80 @@
+#   OpenBSD Aliases
+#
+#   PFCTL Aliases
+alias edit-pf='doas vim /etc/pf.conf'
+alias pflush-load='doas pfctl -Fr -f /etc/pf.conf'
+alias loadrules='doas pfctl -vf /etc/pf.conf'
+alias testrules='doas pfctl -vnf /etc/pf.conf'
+alias pfview='doas pfctl -vvsr | grep @'
+alias view-pfconf='doas more /etc/pf.conf'
+alias rulehits='doas systat rules'
+alias pfstates='doas pfctl -s states'
+alias showtables='doas pfctl -s Tables'
+alias shownat='sudo pfctl -ss | grep'
+#
+## PACKAGES INFORMATION
+alias pkg-search='pkg_info -Q'         # case insensitive seach available apps
+alias pkg-files='pkg_info -L'          # files a particular package installed
+alias pkg-allinstalled='pkg_info -a'   # list all installed packages
+alias pkg-maninstalled='pkg_info -m'   # list manually installed packages
+alias installed='pkg_info -m'          # list manually installed packages
+alias pkg-messages='pkg_info -M'       # re-show during installation messages
+alias pkg-orphans='pkg_info -t'        # pkgs not required by other pkgs
+alias pkg-matchfile='pkg_info -E'      # match a file to a particular package
+#
+# SERVICES
+# ex. doas sh /etc/rc.d/relayd start
+alias listrc='ls /etc/rc.d/'
+alias startrc='doas sh /etc/rc.d/'
+#
+#   QUEUE Aliases
+alias qview='doas pfctl -sq'
+alias qstats='doas systat queues'
+alias qcounters='doas pfctl -vsq'
+#
+#  General Information
+alias ppath='echo $PKG_PATH'
+alias update='doas pkg_add -viu'
+#
+#   Terminal Shortcuts
+alias sudo='doas'
+alias viewp='more ~/.myalias'
+alias cp='cp -iv'                           # Preferred 'cp' implementation
+alias mv='mv -iv'                           # Preferred 'mv' implementation
+alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
+alias ll='ls -FlAhp'                        # Preferred 'ls' implementation
+alias less='less -FSRXc'                    # Preferred 'less' implementation
+cd() { builtin cd "$@"; ll; }               # Always list directory contents upon 'cd'
+# alias cd..='cd ../'                         # Go back 1 directory level (for fast typers)
+alias ..='cd ../'                           # Go back 1 directory level
+alias ...='cd ../../'                       # Go back 2 directory levels
+alias .3='cd ../../../'                     # Go back 3 directory levels
+alias .4='cd ../../../../'                  # Go back 4 directory levels
+alias .5='cd ../../../../../'               # Go back 5 directory levels
+alias .6='cd ../../../../../../'            # Go back 6 directory levels
+#
+alias wanip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias shroute='netstat -nr -f inet'
+alias restart-sshd='doas pkill -1 sshd'
+alias reboot='doas reboot'
+alias shutdown-now='doas shutdown -h now'
+#
+alias ln='ln -i'
+alias j='jobs -l'
+alias df='df -H'
+alias du='du -ch'
+alias h='history'
+alias mount='mount |column -t'
+alias path='echo -e ${PATH//:/\\n}'
+# ls better
+alias la="ls -aF"
+alias ld="ls -ld"
+alias ll="ls -l"
+alias lt='ls -At1 && echo "------Oldest--"'
+alias ltr='ls -Art1 && echo "------Newest--"'
+#
+## TMUX SHORTCUTS
+alias tmuxa='tmux attach -t'
+alias tmuxl='tmux ls'
+alias tmuxs='tmux new-session -s'
+#
