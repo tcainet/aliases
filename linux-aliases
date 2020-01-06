@@ -1,0 +1,134 @@
+# Include the following in .bashrc to use .bash_aliases
+# if [ -f ~/.bash_aliases ]; then
+#     . ~/.bash_aliases
+# fi
+#
+pi@RPI3B:~ $ more .bash_aliases
+## GENERAL UNIX ALIASES ##
+# PROMPT: export PS1="\[\033[01;33m\][$USER@$HOSTNAME]\[\033[0;00m\] \[\033[01;32m\]\w\\$\[\033[0;00m\] "
+
+# SYSTEM MAINTENANCE ALIASES
+alias update='sudo apt-get update && sudo apt-get upgrade'
+alias lmu='sudo apt-get update && sudo apt-get dist-upgrade'
+alias apt-get='sudo apt-get'
+alias updatey='sudo apt-get --yes'
+alias reboot='sudo /sbin/reboot'
+
+# ADD SAFETY NETS
+alias viewp='more ~/.bash_aliases'
+alias chgrp='chgrp --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chown='chown --preserve-root'
+alias cp='cp -i'
+alias df='df -H'
+alias mv='mv -i'
+alias ln='ln -i'
+
+# SYSTEM INFORMATION ALIASES
+alias list-fw-rules='sudo iptables -L -n -v'
+alias sys-version='lsb_release -a'
+alias path='echo -e ${PATH//:/\\n}'
+alias appsearch='apt-cache pkgnames'
+alias dirtree='ls -R | grep :*/ | grep : | sed -e '\''s/:$//'\'' -e '\''s/[^-][^\/]*\//--/g'\'' -e '\''s/^/   /'\'' -e '\''s/-/|/'\'''
+alias du='du -ch'
+alias h='history'
+alias histg="history | grep"
+alias j='jobs -l'
+alias ls='ls --color=auto'
+alias lsh='ls -lhXG' # long listing, human-readable, sort by extension, do not show group info
+alias mount='mount |column -t'
+alias now='date +"%T"'
+alias nowdate='date +"%d-%m-%Y"'
+alias nowtime='now'
+alias cpuinfo='lscpu'
+alias atop='sudo atop'
+alias ipinfo="curl ifconfig.me && curl ifconfig.me/host"
+alias wanip='dig +short myip.opendns.com @resolver1.opendns.com'
+# ls better
+alias la="ls -aF"
+alias ld="ls -ld"
+alias ll="ls -l"
+alias lt='ls -At1 && echo "------Oldest--"'
+alias ltr='ls -Art1 && echo "------Newest--"'
+
+# FIREWALL ALIASES (IPTABLES) https://www.madirish.net/566
+alias saverules='sudo /sbin/iptables-save > /etc/iptables/rules.v4'
+alias loadrules='sudo /usr/sbin/iptables-apply /etc/iptables/rules.v4'
+alias viewrules='sudo /sbin/iptables -L'
+alias listrules='sudo cat -n /etc/iptables/rules.v4'
+# sudo watch --interval 0 'iptables -nvL | grep -v "0     0"'
+
+# EDIT ALIASES
+alias edit='vim'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias grep='grep --color=auto'
+alias agrep='alias | grep'
+
+# CONNECTION STATE ALIASES
+alias ports='netstat -tulanp'
+alias connections='sudo lsof -n -P -i +c 15'
+alias listssh='netstat -n --protocol inet | grep :22'
+alias restartsshd='sudo invoke-rc.d ssh restart'
+alias iflist='nmap --iflist'
+alias showint='sudo lshw -C network'
+alias listening='sudo lsof -ni | grep LISTEN'
+#
+# TMUX ALIASES
+alias tmuxl='tmux ls'
+alias tmuxa='tmux attach -t'
+alias tmuxs='tmux new-session -s'
+#
+# SQUID ALIASES
+# http://goo.gl/X48iRR
+alias proxy-check-port='sudo netstat -antp | grep squid'
+alias proxy-check-run='sudo ps -aux |grep squid'
+alias proxy-restart='sudo service squid restart'
+alias proxy-reload='sudo service squid reload'
+alias proxy-monitor='sudo tail -f /var/log/squid/access.log'
+
+# HOST ALIASES
+alias tampa-C891F-K9='ssh tca@108.9.162.171'
+
+# MISCELANEOUS ALIASES
+alias fastping='sudo ping -c 3 -s.2'
+alias genpasswd="strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 30 | tr -d '\n'; echo"
+md5check() { md5sum "$1" | grep "$2";}
+alias ciscop='perl cdecrypt.pl'
+alias ipcalc='ipcalc -n'
+
+# EXTRACT ALIASES
+extract() {
+    if [ -f $1 ] ; then
+      case $1 in
+        *.tar.bz2)   tar xjf $1     ;;
+        *.tar.gz)    tar xzf $1     ;;
+        *.bz2)       bunzip2 $1     ;;
+        *.rar)       unrar e $1     ;;
+        *.gz)        gunzip $1      ;;
+        *.tar)       tar xf $1      ;;
+        *.tbz2)      tar xjf $1     ;;
+        *.tgz)       tar xzf $1     ;;
+        *.zip)       unzip $1       ;;
+        *.Z)         uncompress $1  ;;
+        *.7z)        7z x $1        ;;
+        *)     echo "'$1' cannot be extracted via extract()" ;;
+         esac
+     else
+         echo "'$1' is not a valid file"
+     fi
+}
+
+#
+## NMAP ALIASES
+alias netcheck='sudo nmap -sP $(ip -o addr show | grep inet\  | grep eth | cut -d\  -f 7)'
+alias nmap-esp='sudo nmap -sO -v -P0 -p 50-51'
+alias nmap-icmp='sudo nmap -sP -PE'
+alias nmap-isakmp='sudo nmap -p U:500,4500,T:500,4500'
+alias nmap-sshcheck='sudo nmap --script "ssh-*"'
+alias nmap-ping='sudo nmap -sP -PO'
+alias nmap-trace='sudo nmap -sP -PO --packet-trace'
+alias nmap-traceroute='sudo nmap -sP -PO --traceroute'
+alias nmap-update='sudo nmap --script-updatedb'
+alias nmap-whois='sudo nmap sn --script whois --script-args whois.whodb=arin+ripe+afrinic'
+#
